@@ -1,0 +1,485 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Template">
+      <UniqueIdentifier>{9ced7016-fd79-4543-9284-efa91b8fe6a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\XSLT">
+      <UniqueIdentifier>{d99b72d4-56ba-4ef5-9020-92b55426a509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FS">
+      <UniqueIdentifier>{d14df772-8f7d-4f03-8304-7097c9f98861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Transactions">
+      <UniqueIdentifier>{f8b5afda-5056-4001-b7d6-d16d26bef4fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BatchManager">
+      <UniqueIdentifier>{1ffdd00c-28d3-443d-b094-6b69a866a9cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BatchManager\Evaluators">
+      <UniqueIdentifier>{046e60c5-30a1-4541-970f-730436fa36ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BatchManager\Storages">
+      <UniqueIdentifier>{9246c481-3db1-4134-b23a-b11f9e9bc327}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\XSD">
+      <UniqueIdentifier>{5e86be6e-7659-41b4-afab-3e66e3f796dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SSL">
+      <UniqueIdentifier>{80371761-36de-4752-8b9e-f41a18ffa769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CSV">
+      <UniqueIdentifier>{92c0c095-a5af-4e43-ac53-826bc8d7bdae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Zip">
+      <UniqueIdentifier>{75d10955-cad9-4221-afaa-d508484b01d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Template">
+      <UniqueIdentifier>{c236ab90-512c-4b6a-a78a-2b3f35c64665}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\XSLT">
+      <UniqueIdentifier>{4c841830-136b-47e4-8335-1b26941a8d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FS">
+      <UniqueIdentifier>{596824e7-b54d-4761-b8f9-5736000926fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MQ">
+      <UniqueIdentifier>{98bbd635-447a-4aa3-9211-65f90262148e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Transactions">
+      <UniqueIdentifier>{89cd4646-70c7-4727-9538-8a4776cbe535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DB">
+      <UniqueIdentifier>{78c4ce02-d154-48e4-a1af-1e8f21b99ca8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BatchManager">
+      <UniqueIdentifier>{9466b970-d0d1-464f-a9ff-8f61e473d560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BatchManager\Evaluators">
+      <UniqueIdentifier>{9caf2ab5-29bd-4d57-a6a4-77b6dd8a8bfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BatchManager\Storages">
+      <UniqueIdentifier>{c513c7f6-c59f-4675-841f-5f76642c1000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\XSD">
+      <UniqueIdentifier>{d72a6a80-5ce1-4a27-819b-2295fcfba739}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SSL">
+      <UniqueIdentifier>{c2925d17-92dd-4c39-888a-3e67fa9600f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MD5">
+      <UniqueIdentifier>{a806f8f3-36d5-4301-b542-f4ada6477004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CSV">
+      <UniqueIdentifier>{6ca4591a-27d8-4e98-806d-3d8ebd02022d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Zip">
+      <UniqueIdentifier>{5791f6d0-113f-49d7-9ec8-d6981eaff990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\MQ">
+      <UniqueIdentifier>{379f7ca7-0b87-42bb-93ac-7a6ad19df4c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Cache">
+      <UniqueIdentifier>{fe66af86-72ef-414f-a1ff-d2e42aed5dc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DB">
+      <UniqueIdentifier>{86410aaa-d01f-43c7-8e6e-0b52e5c55154}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\AbstractWatcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AppSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DllMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FilterChain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InstrumentedObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VersionInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XPathHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Template\TemplateParser.cpp">
+      <Filter>Source Files\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Template\TemplateTransformFilter.cpp">
+      <Filter>Source Files\Template</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XSLT\ExtensionAscii.cpp">
+      <Filter>Source Files\XSLT</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XSLT\ExtensionBase64.cpp">
+      <Filter>Source Files\XSLT</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XSLT\ExtensionHash.cpp">
+      <Filter>Source Files\XSLT</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XSLT\ExtensionNewLine.cpp">
+      <Filter>Source Files\XSLT</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XSLT\ExtensionRegex.cpp">
+      <Filter>Source Files\XSLT</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XSLT\ExtensionTemplate.cpp">
+      <Filter>Source Files\XSLT</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XSLT\ExtensionTime.cpp">
+      <Filter>Source Files\XSLT</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XSLT\ExtensionUrl.cpp">
+      <Filter>Source Files\XSLT</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Xslt\XSLTFilter.cpp">
+      <Filter>Source Files\XSLT</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fs\dirent_w32.c">
+      <Filter>Source Files\FS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fs\FsWatcher.cpp">
+      <Filter>Source Files\FS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Transactions\AbstractStatePersistence.cpp">
+      <Filter>Source Files\Transactions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Transactions\FileMetadataStatePersist.cpp">
+      <Filter>Source Files\Transactions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Transactions\MemoryStatePersist.cpp">
+      <Filter>Source Files\Transactions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\BatchConfig.cpp">
+      <Filter>Source Files\BatchManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\BatchDbOps.cpp">
+      <Filter>Source Files\BatchManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\BatchItem.cpp">
+      <Filter>Source Files\BatchManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\BatchItemEval.cpp">
+      <Filter>Source Files\BatchManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\BatchManager.cpp">
+      <Filter>Source Files\BatchManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\BatchResolution.cpp">
+      <Filter>Source Files\BatchManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\BatchStorageBase.cpp">
+      <Filter>Source Files\BatchManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\Evaluators\BatchItemACHEval.cpp">
+      <Filter>Source Files\BatchManager\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\Evaluators\BatchItemGSRSEval.cpp">
+      <Filter>Source Files\BatchManager\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\Evaluators\BatchItemMT104Eval.cpp">
+      <Filter>Source Files\BatchManager\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\Evaluators\BatchItemMT940Eval.cpp">
+      <Filter>Source Files\BatchManager\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\Evaluators\BatchItemMT950Eval.cpp">
+      <Filter>Source Files\BatchManager\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\Storages\BatchFlatfileStorage.cpp">
+      <Filter>Source Files\BatchManager\Storages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\Storages\BatchMQStorage.cpp">
+      <Filter>Source Files\BatchManager\Storages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\Storages\BatchXMLfileStorage.cpp">
+      <Filter>Source Files\BatchManager\Storages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\Storages\BatchZipArchiveStorage.cpp">
+      <Filter>Source Files\BatchManager\Storages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BatchManager\Storages\BatchZipStorage.cpp">
+      <Filter>Source Files\BatchManager\Storages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XSD\XSDFilter.cpp">
+      <Filter>Source Files\XSD</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XSD\XSDValidationException.cpp">
+      <Filter>Source Files\XSD</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SSL\P7MFilter.cpp">
+      <Filter>Source Files\SSL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SSL\SSLFilter.cpp">
+      <Filter>Source Files\SSL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Zip\unzip.cpp">
+      <Filter>Source Files\Zip</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Zip\zip.cpp">
+      <Filter>Source Files\Zip</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Zip\ZipFilter.cpp">
+      <Filter>Source Files\Zip</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AbstractFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MQ\MqFilter.cpp">
+      <Filter>Source Files\MQ</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MQ\MqWatcher.cpp">
+      <Filter>Source Files\MQ</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XSLT\ExtensionLookup.cpp">
+      <Filter>Source Files\XSLT</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DB\DbWatcher.cpp">
+      <Filter>Source Files\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DB\DbDad.cpp">
+      <Filter>Source Files\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RoutingMessageEvaluator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RoutingAggregationCode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Currency.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SSL\HMAC.cpp">
+      <Filter>Source Files\SSL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SSL\MD5.cpp">
+      <Filter>Source Files\SSL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base64Filter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RoutingKeyword.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\AbstractFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AbstractWatcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AppSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DllMain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FilterChain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InstrumentedObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TimeUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XPathHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Template\TemplateParser.h">
+      <Filter>Header Files\Template</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Template\TemplateTransformFilter.h">
+      <Filter>Header Files\Template</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XSLT\ExtensionAscii.h">
+      <Filter>Header Files\XSLT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XSLT\ExtensionBase64.h">
+      <Filter>Header Files\XSLT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XSLT\ExtensionHash.h">
+      <Filter>Header Files\XSLT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XSLT\ExtensionNewLine.h">
+      <Filter>Header Files\XSLT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XSLT\ExtensionRegex.h">
+      <Filter>Header Files\XSLT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XSLT\ExtensionTemplate.h">
+      <Filter>Header Files\XSLT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XSLT\ExtensionTime.h">
+      <Filter>Header Files\XSLT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XSLT\ExtensionUrl.h">
+      <Filter>Header Files\XSLT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Xslt\XSLTFilter.h">
+      <Filter>Header Files\XSLT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fs\dirent_w32.h">
+      <Filter>Header Files\FS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fs\FsWatcher.h">
+      <Filter>Header Files\FS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Transactions\AbstractStatePersistence.h">
+      <Filter>Header Files\Transactions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Transactions\FileMetadataStatePersist.h">
+      <Filter>Header Files\Transactions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Transactions\MemoryStatePersist.h">
+      <Filter>Header Files\Transactions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Db\DbWatcher.h">
+      <Filter>Header Files\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\BatchConfig.h">
+      <Filter>Header Files\BatchManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\BatchDbOps.h">
+      <Filter>Header Files\BatchManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\BatchItem.h">
+      <Filter>Header Files\BatchManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\BatchItemEval.h">
+      <Filter>Header Files\BatchManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\BatchManager.h">
+      <Filter>Header Files\BatchManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\BatchResolution.h">
+      <Filter>Header Files\BatchManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\BatchStorageBase.h">
+      <Filter>Header Files\BatchManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\DllMain.h">
+      <Filter>Header Files\BatchManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\Evaluators\BatchItemACHEval.h">
+      <Filter>Header Files\BatchManager\Evaluators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\Evaluators\BatchItemGSRSEval.h">
+      <Filter>Header Files\BatchManager\Evaluators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\Evaluators\BatchItemMT104Eval.h">
+      <Filter>Header Files\BatchManager\Evaluators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\Evaluators\BatchItemMT940Eval.h">
+      <Filter>Header Files\BatchManager\Evaluators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\Evaluators\BatchItemMT950Eval.h">
+      <Filter>Header Files\BatchManager\Evaluators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\Storages\BatchFlatfileStorage.h">
+      <Filter>Header Files\BatchManager\Storages</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\Storages\BatchMQStorage.h">
+      <Filter>Header Files\BatchManager\Storages</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\Storages\BatchXMLfileStorage.h">
+      <Filter>Header Files\BatchManager\Storages</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\Storages\BatchZipArchiveStorage.h">
+      <Filter>Header Files\BatchManager\Storages</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BatchManager\Storages\BatchZipStorage.h">
+      <Filter>Header Files\BatchManager\Storages</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XSD\XSDFilter.h">
+      <Filter>Header Files\XSD</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XSD\XSDValidationException.h">
+      <Filter>Header Files\XSD</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SSL\P7MFilter.h">
+      <Filter>Header Files\SSL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MD5\global.h">
+      <Filter>Header Files\MD5</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MD5\MD5.h">
+      <Filter>Header Files\MD5</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MD5\MD5class.h">
+      <Filter>Header Files\MD5</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Zip\unzip.h">
+      <Filter>Header Files\Zip</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Zip\zip.h">
+      <Filter>Header Files\Zip</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Zip\ZipFilter.h">
+      <Filter>Header Files\Zip</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MQ\MqFilter.h">
+      <Filter>Header Files\MQ</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MQ\MqWatcher.h">
+      <Filter>Header Files\MQ</Filter>
+    </ClInclude>
+    <ClInclude Include="src\XSLT\ExtensionLookup.h">
+      <Filter>Header Files\XSLT</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DB\DbDad.h">
+      <Filter>Header Files\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoutingMessageEvaluator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoutingAggregationCode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Currency.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SSL\MD5.h">
+      <Filter>Header Files\SSL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SSL\HMAC.h">
+      <Filter>Header Files\SSL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Base64Filter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoutingKeyword.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="src\DB\DbQueueWatcher.h">
+      <Filter>Header Files\DB</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\SSL\SSLFilter.h">
+      <Filter>Header Files\SSL</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\CSV\CSVFilter.h">
+      <Filter>Header Files\CSV</Filter>
+    </CustomBuildStep>
+  </ItemGroup>
+</Project>

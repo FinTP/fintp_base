@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>fintp_base</ProjectName>
+    <ProjectGuid>{44EE663F-3A21-4121-8BF8-6C251B588066}</ProjectGuid>
+    <RootNamespace>qPayBase</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../fintp_log/src;../fintp_utils/src;../fintp_base/src;../fintp_transport/src;../fintp_udal/src;../fintp_ws/src;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\fintp_utils\$(Configuration);..\fintp_log\$(Configuration);..\fintp_transport\$(Configuration);..\fintp_udal\$(Configuration);$(LibraryPath)</LibraryPath>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)d</TargetName>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../fintp_log/src;../fintp_utils/src;../fintp_base/src;../fintp_transport/src;../fintp_udal/src;../fintp_ws/src;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\fintp_utils\$(Configuration);..\fintp_log\$(Configuration);..\fintp_transport\$(Configuration);..\fintp_udal\$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>XALAN_1_9;DEBUG_ENABLED;_DEBUG;RTTI;WIN32;_BASEDLL;USE_BOOST_REGEX;CRT_SECURE;CURL_STATICLIB;CURL_DISABLE_LDAP;ZIPARCHIVE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <SmallerTypeCheck>true</SmallerTypeCheck>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>fintp_utilsd.lib;fintp_logd.lib;fintp_transportd.lib;fintp_udald.lib;pthreadVSE.lib;xerces-c_2d.lib;Xalan-C_1d.lib;Ws2_32.lib;libeay32.lib;ssleay32.lib;libcurld.lib;ZipArchive.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <FixedBaseAddress>false</FixedBaseAddress>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Link>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <AdditionalDependencies>fintp_utils.lib;fintp_log.lib;fintp_transport.lib;fintp_udal.lib;pthreadVSE.lib;xerces-c_2.lib;Xalan-C_1.lib;Ws2_32.lib;libeay32.lib;ssleay32.lib;libcurl.lib;ZipArchive.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <PreprocessorDefinitions>XALAN_1_9;DEBUG_ENABLED;RTTI;WIN32;_BASEDLL;USE_BOOST_REGEX;CRT_SECURE;CURL_STATICLIB;CURL_DISABLE_LDAP;ZIPARCHIVE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\AbstractFilter.cpp" />
+    <ClCompile Include="src\AbstractWatcher.cpp" />
+    <ClCompile Include="src\AppSettings.cpp" />
+    <ClCompile Include="src\Base64Filter.cpp" />
+    <ClCompile Include="src\Currency.cpp" />
+    <ClCompile Include="src\DB\DbDad.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\DB\DbWatcher.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\DllMain.cpp" />
+    <ClCompile Include="src\FilterChain.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Oracle+WMQ Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="src\InstrumentedObject.cpp" />
+    <ClCompile Include="src\MQ\MqFilter.cpp" />
+    <ClCompile Include="src\MQ\MqWatcher.cpp" />
+    <ClCompile Include="src\RoutingAggregationCode.cpp" />
+    <ClCompile Include="src\RoutingKeyword.cpp" />
+    <ClCompile Include="src\RoutingMessageEvaluator.cpp" />
+    <ClCompile Include="src\SSL\HMAC.cpp" />
+    <ClCompile Include="src\SSL\MD5.cpp" />
+    <ClCompile Include="src\VersionInfo.cpp" />
+    <ClCompile Include="src\XPathHelper.cpp" />
+    <ClCompile Include="src\Template\TemplateParser.cpp" />
+    <ClCompile Include="src\Template\TemplateTransformFilter.cpp" />
+    <ClCompile Include="src\XSLT\ExtensionAscii.cpp" />
+    <ClCompile Include="src\XSLT\ExtensionBase64.cpp" />
+    <ClCompile Include="src\XSLT\ExtensionHash.cpp" />
+    <ClCompile Include="src\XSLT\ExtensionLookup.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\XSLT\ExtensionNewLine.cpp" />
+    <ClCompile Include="src\XSLT\ExtensionRegex.cpp" />
+    <ClCompile Include="src\XSLT\ExtensionTemplate.cpp" />
+    <ClCompile Include="src\XSLT\ExtensionTime.cpp" />
+    <ClCompile Include="src\XSLT\ExtensionUrl.cpp" />
+    <ClCompile Include="src\Xslt\XSLTFilter.cpp" />
+    <ClCompile Include="src\Fs\dirent_w32.c" />
+    <ClCompile Include="src\Fs\FsWatcher.cpp" />
+    <ClCompile Include="src\Transactions\AbstractStatePersistence.cpp" />
+    <ClCompile Include="src\Transactions\FileMetadataStatePersist.cpp" />
+    <ClCompile Include="src\Transactions\MemoryStatePersist.cpp" />
+    <ClCompile Include="src\BatchManager\BatchConfig.cpp" />
+    <ClCompile Include="src\BatchManager\BatchDbOps.cpp" />
+    <ClCompile Include="src\BatchManager\BatchItem.cpp" />
+    <ClCompile Include="src\BatchManager\BatchItemEval.cpp" />
+    <ClCompile Include="src\BatchManager\BatchManager.cpp" />
+    <ClCompile Include="src\BatchManager\BatchResolution.cpp" />
+    <ClCompile Include="src\BatchManager\BatchStorageBase.cpp" />
+    <ClCompile Include="src\BatchManager\Evaluators\BatchItemACHEval.cpp" />
+    <ClCompile Include="src\BatchManager\Evaluators\BatchItemGSRSEval.cpp" />
+    <ClCompile Include="src\BatchManager\Evaluators\BatchItemMT104Eval.cpp" />
+    <ClCompile Include="src\BatchManager\Evaluators\BatchItemMT940Eval.cpp" />
+    <ClCompile Include="src\BatchManager\Evaluators\BatchItemMT950Eval.cpp" />
+    <ClCompile Include="src\BatchManager\Storages\BatchFlatfileStorage.cpp" />
+    <ClCompile Include="src\BatchManager\Storages\BatchMQStorage.cpp" />
+    <ClCompile Include="src\BatchManager\Storages\BatchXMLfileStorage.cpp" />
+    <ClCompile Include="src\BatchManager\Storages\BatchZipArchiveStorage.cpp" />
+    <ClCompile Include="src\BatchManager\Storages\BatchZipStorage.cpp" />
+    <ClCompile Include="src\XSD\XSDFilter.cpp" />
+    <ClCompile Include="src\XSD\XSDValidationException.cpp" />
+    <ClCompile Include="src\SSL\P7MFilter.cpp" />
+    <ClCompile Include="src\SSL\SSLFilter.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Oracle+WMQ Debug|Win32'">false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='Oracle+WMQ Debug|Win32'">false</PreprocessSuppressLineNumbers>
+    </ClCompile>
+    <ClCompile Include="src\Zip\unzip.cpp" />
+    <ClCompile Include="src\Zip\zip.cpp" />
+    <ClCompile Include="src\Zip\ZipFilter.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">false</PreprocessSuppressLineNumbers>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\AbstractFilter.h" />
+    <ClInclude Include="src\AbstractWatcher.h" />
+    <ClInclude Include="src\AppSettings.h" />
+    <ClInclude Include="src\Base64Filter.h" />
+    <ClInclude Include="src\Currency.h" />
+    <ClInclude Include="src\DB\DbDad.h" />
+    <ClInclude Include="src\DllMain.h" />
+    <ClInclude Include="src\FilterChain.h" />
+    <ClInclude Include="src\InstrumentedObject.h" />
+    <ClInclude Include="src\MQ\MqFilter.h" />
+    <ClInclude Include="src\MQ\MqWatcher.h" />
+    <ClInclude Include="src\RoutingAggregationCode.h" />
+    <ClInclude Include="src\RoutingKeyword.h" />
+    <ClInclude Include="src\RoutingMessageEvaluator.h" />
+    <ClInclude Include="src\SSL\HMAC.h" />
+    <ClInclude Include="src\SSL\MD5.h" />
+    <ClInclude Include="src\TimeUtil.h" />
+    <ClInclude Include="src\XPathHelper.h" />
+    <ClInclude Include="src\Template\TemplateParser.h" />
+    <ClInclude Include="src\Template\TemplateTransformFilter.h" />
+    <ClInclude Include="src\XSLT\ExtensionAscii.h" />
+    <ClInclude Include="src\XSLT\ExtensionBase64.h" />
+    <ClInclude Include="src\XSLT\ExtensionHash.h" />
+    <ClInclude Include="src\XSLT\ExtensionLookup.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="src\XSLT\ExtensionNewLine.h" />
+    <ClInclude Include="src\XSLT\ExtensionRegex.h" />
+    <ClInclude Include="src\XSLT\ExtensionTemplate.h" />
+    <ClInclude Include="src\XSLT\ExtensionTime.h" />
+    <ClInclude Include="src\XSLT\ExtensionUrl.h" />
+    <ClInclude Include="src\Xslt\XSLTFilter.h" />
+    <ClInclude Include="src\Fs\dirent_w32.h" />
+    <ClInclude Include="src\Fs\FsWatcher.h" />
+    <CustomBuildStep Include="src\MQ\AqWatcher.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\MQ\XMLHelper.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <ClInclude Include="src\Transactions\AbstractStatePersistence.h" />
+    <ClInclude Include="src\Transactions\FileMetadataStatePersist.h" />
+    <ClInclude Include="src\Transactions\MemoryStatePersist.h" />
+    <CustomBuildStep Include="src\DB\DbQueueWatcher.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Oracle+WMQ Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <ClInclude Include="src\Db\DbWatcher.h" />
+    <CustomBuildStep Include="src\DB\Oracle\OracleColumn.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\Oracle\OracleDatabase.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\Oracle\OracleDatabaseProvider.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\Oracle\OracleParameter.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='NODB+WMQ Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\ODBC\ODBCColumn.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\ODBC\ODBCDatabase.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\ODBC\ODBCDatabaseProvider.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\ODBC\ODBCParameter.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\ODBC\DB2\Db2Database.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\ODBC\DB2\Db2DatabaseProvider.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\ODBC\SqlServer\SqlServerDatabase.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\ODBC\Informix\InformixDatabase.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="src\DB\ODBC\Informix\InformixDatabaseProvider.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <ClInclude Include="src\BatchManager\BatchConfig.h" />
+    <ClInclude Include="src\BatchManager\BatchDbOps.h" />
+    <ClInclude Include="src\BatchManager\BatchItem.h" />
+    <ClInclude Include="src\BatchManager\BatchItemEval.h" />
+    <ClInclude Include="src\BatchManager\BatchManager.h" />
+    <ClInclude Include="src\BatchManager\BatchResolution.h" />
+    <ClInclude Include="src\BatchManager\BatchStorageBase.h" />
+    <ClInclude Include="src\BatchManager\DllMain.h" />
+    <ClInclude Include="src\BatchManager\Evaluators\BatchItemACHEval.h" />
+    <ClInclude Include="src\BatchManager\Evaluators\BatchItemGSRSEval.h" />
+    <ClInclude Include="src\BatchManager\Evaluators\BatchItemMT104Eval.h" />
+    <ClInclude Include="src\BatchManager\Evaluators\BatchItemMT940Eval.h" />
+    <ClInclude Include="src\BatchManager\Evaluators\BatchItemMT950Eval.h" />
+    <ClInclude Include="src\BatchManager\Storages\BatchFlatfileStorage.h" />
+    <ClInclude Include="src\BatchManager\Storages\BatchMQStorage.h" />
+    <ClInclude Include="src\BatchManager\Storages\BatchXMLfileStorage.h" />
+    <ClInclude Include="src\BatchManager\Storages\BatchZipArchiveStorage.h" />
+    <ClInclude Include="src\BatchManager\Storages\BatchZipStorage.h" />
+    <ClInclude Include="src\XSD\XSDFilter.h" />
+    <ClInclude Include="src\XSD\XSDValidationException.h" />
+    <ClInclude Include="src\SSL\P7MFilter.h" />
+    <CustomBuildStep Include="src\SSL\SSLFilter.h" />
+    <ClInclude Include="src\MD5\global.h" />
+    <ClInclude Include="src\MD5\MD5.h" />
+    <ClInclude Include="src\MD5\MD5class.h" />
+    <CustomBuildStep Include="src\CSV\CSVFilter.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Oracle+WMQ Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <ClInclude Include="src\Zip\unzip.h" />
+    <ClInclude Include="src\Zip\zip.h" />
+    <ClInclude Include="src\Zip\ZipFilter.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
