@@ -1,5 +1,4 @@
-/*
-* FinTP - Financial Transactions Processing Application
+/* FinTP - Financial Transactions Processing Application
 * Copyright (C) 2013 Business Information Systems (Allevo) S.R.L.
 *
 * This program is free software: you can redistribute it and/or modify
@@ -413,18 +412,6 @@ RoutingMessageEvaluator::~RoutingMessageEvaluator()
 		try
 		{
 			TRACE( "An error occured while clearing fields" );
-		}catch( ... ){};
-	}
-
-	try
-	{
-		m_Keywords->clear();
-	}
-	catch( ... )
-	{
-		try
-		{
-			TRACE( "An error occured while clearing message keywords" );
 		}catch( ... ){};
 	}
 }
