@@ -1,4 +1,5 @@
-/* FinTP - Financial Transactions Processing Application
+/*
+* FinTP - Financial Transactions Processing Application
 * Copyright (C) 2013 Business Information Systems (Allevo) S.R.L.
 *
 * This program is free software: you can redistribute it and/or modify
@@ -63,7 +64,7 @@ const string RoutingMessageEvaluator::FEEDBACKQPI_NOREACT = "QPI21";
 // RoutingMessageEvaluator implementation 
 // new dbv2
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_QPIID = "CORRELID";
-const string RoutingMessageEvaluator::AGGREGATIONTOKEN_QPICODE = "APICODE";
+const string RoutingMessageEvaluator::AGGREGATIONTOKEN_QPICODE = "APPCODE";
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_SAACODE = "INTERFACECODE";
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_TFDCODE = "CORESPCODE";
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_SWIFTCODE = "NETWORKCODE";
