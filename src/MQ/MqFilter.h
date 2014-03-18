@@ -112,13 +112,13 @@ namespace FinTP
 			// returns true if the filter is running in batch mode
 			bool isBatch() const;
 
-			// returns the WMQ queue manager name
+			// returns the MQ queue manager name
 			string getQueueManagerName() const;
 
-			// returns the WMQ channel definition
+			// returns the MQ channel definition
 			string getTransportURI() const;
 
-			// returns the WMQ queue name used to put/get messages from
+			// returns the MQ queue name used to put/get messages from
 			string getQueueName() const;
 
 			TransportHelper::TRANSPORT_HELPER_TYPE getHelperType() const;
@@ -136,7 +136,6 @@ namespace FinTP
 
 			string m_CrtBatchId;
 
-			//will be WMQ BatchWMQ
 			BatchManager<BatchMQStorage> *m_BatchManager;
 			
 			// validates required properties

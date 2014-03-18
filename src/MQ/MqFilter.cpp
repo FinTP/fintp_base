@@ -109,25 +109,26 @@ AbstractFilter::FilterResult MqFilter::ProcessMessage( XERCES_CPP_NAMESPACE_QUAL
 			// if first in Batch
 			if ( m_BatchManager == NULL )
 			{
-				//create WMQ BatchManager
-				m_BatchManager = new BatchManager<BatchMQStorage>( BatchManagerBase::WMQ, BatchResolution::SYNCHRONOUS );
+				//create MQ BatchManager
+				m_BatchManager = new BatchManager<BatchMQStorage>( BatchManagerBase::MQ, BatchResolution::SYNCHRONOUS );
+				m_BatchManager->storage().initialize( m_HelperType );
 				m_BatchManager->storage().setQueue( getQueueName( transportHeaders ) );
 				m_BatchManager->storage().setBackupQueue( getBackupQueueName( transportHeaders ) );
 				m_BatchManager->storage().setQueueManager( getQueueManagerName( transportHeaders ) );
 				m_BatchManager->storage().setTransportURI( getTransportURI( transportHeaders ) );
 				m_BatchManager->storage().setAutoAbandon( 3 );
 				m_BatchManager->storage().setCleaningUp( false );
-				//open WMQ BatchManager
+				//open MQ BatchManager
 				//
 				// connector is Notified with groupId, 
 				// groupId will be passed to next Filters using TransportHeaders
 				
 				//storage ( group ) is open for output 
 				
-				DEBUG( "Opening WMQ Storage ..." );
+				DEBUG( "Opening MQ Storage ..." );
 				
 				if ( !transportHeaders.ContainsKey( MqFilter::MQGROUPID ) )
-					throw logic_error( "Expected parameter of WMQ batch [MQGROUPID] missing" );
+					throw logic_error( "Expected parameter of MQ batch [MQGROUPID] missing" );
 
 				m_CrtBatchId = getGroupId( transportHeaders );
 				DEBUG( "Transport headers param MQGROUPID is [" << m_CrtBatchId.c_str() << "]" );
@@ -308,10 +309,10 @@ AbstractFilter::FilterResult MqFilter::ProcessMessage( AbstractFilter::buffer_ty
 		if ( isBatch( transportHeaders ) )
 		{
 			if ( !transportHeaders.ContainsKey( MQGROUPID ) )
-				throw logic_error( "Expected parameter of WMQ batch [MQGROUPID] missing" );
+				throw logic_error( "Expected parameter of MQ batch [MQGROUPID] missing" );
 
 			if ( !transportHeaders.ContainsKey( MQSEQUENCE ) )
-				throw logic_error( "Expected parameter of WMQ batch [MQSEQUENCE] missing" );
+				throw logic_error( "Expected parameter of MQ batch [MQSEQUENCE] missing" );
 
 			string batchId = getGroupId( transportHeaders );
 			string messageId = getMessageId( transportHeaders );
@@ -328,8 +329,9 @@ AbstractFilter::FilterResult MqFilter::ProcessMessage( AbstractFilter::buffer_ty
 			// if first in Batch
 			if ( m_BatchManager == NULL )
 			{
-				//create WMQ BatchManager
-				m_BatchManager = new BatchManager<BatchMQStorage>( BatchManagerBase::WMQ, BatchResolution::SYNCHRONOUS );
+				//create MQ BatchManager
+				m_BatchManager = new BatchManager<BatchMQStorage>( BatchManagerBase::MQ, BatchResolution::SYNCHRONOUS );
+				m_BatchManager->storage().initialize( m_HelperType );
 				m_BatchManager->storage().setQueue( crtQueue );
 				m_BatchManager->storage().setBackupQueue( crtBackupQueue );
 				m_BatchManager->storage().setQueueManager( crtQueueManager );
@@ -337,7 +339,7 @@ AbstractFilter::FilterResult MqFilter::ProcessMessage( AbstractFilter::buffer_ty
 				m_BatchManager->storage().setAutoAbandon( 3 );
 				m_BatchManager->storage().setCleaningUp( false );
 
-				//open WMQ BatchManager
+				//open MQ BatchManager
 				m_BatchManager->open( batchId, ios_base::out );
 			}
 
@@ -611,7 +613,7 @@ void MqFilter::Commit()
 	if ( m_BatchManager != NULL )
 	{
 		m_BatchManager->commit();
-		DEBUG( "Closing WMQ batch" );
+		DEBUG( "Closing MQ batch" );
 		m_BatchManager->close( m_CrtBatchId );
 		
 		DEBUG( "Deleting batch manager..." );
@@ -621,7 +623,7 @@ void MqFilter::Commit()
 }
 
 /// <summary>If filter proccess batches the entire batch is moved to DEAD.LETTER by Cleanup()
-/// for further details see MaFilter::CleanUp()
+/// for further details see MqFilter::CleanUp()
 /// </summary>
 void MqFilter::Abort()
 {
@@ -630,7 +632,7 @@ void MqFilter::Abort()
 	{	
 		m_BatchManager->commit();
 
-		DEBUG( "Closing WMQ batch" );
+		DEBUG( "Closing MQ batch" );
 		m_BatchManager->close( m_CrtBatchId );
 		
 		DEBUG( "Deleting batch manager..." );

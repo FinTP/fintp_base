@@ -99,7 +99,7 @@ BatchManagerBase* BatchManagerBase::CreateBatchManager( const BatchManagerBase::
 		case BatchManagerBase::XMLfile :
 			return new BatchManager< BatchXMLfileStorage >( storageCategory, BatchResolution::SYNCHRONOUS );
 			break;
-		case BatchManagerBase::WMQ :
+		case BatchManagerBase::MQ :
 			return new BatchManager< BatchMQStorage >( storageCategory, BatchResolution::SYNCHRONOUS );
 			break;
 

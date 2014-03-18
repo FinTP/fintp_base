@@ -196,8 +196,7 @@ namespace FinTP
 			{
 				Flatfile,
 				XMLfile,
-				WMQ,
-				AMQ,
+				MQ,
 				ZIP
 			};
 			

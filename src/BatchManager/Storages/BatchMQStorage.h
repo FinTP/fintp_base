@@ -30,7 +30,7 @@ namespace FinTP
 	{
 		public:
 		
-			BatchMQStorage( TransportHelper::TRANSPORT_HELPER_TYPE helperType = TransportHelper::WMQ );
+			BatchMQStorage();
 			~BatchMQStorage();
 			
 			void enqueue( BatchResolution& resolution );
@@ -50,6 +50,7 @@ namespace FinTP
 			void setQueueManager( const string& queueManager ){ m_QueueManager = queueManager; }
 			void setBackupQueue( const string& queue ){ m_BackupQueue = queue; }
 			void setTransportURI( const string& chDef ){ m_ChDef = chDef; }
+			void initialize( TransportHelper::TRANSPORT_HELPER_TYPE );
 			
 			void setAutoAbandon( const int& retries ){ m_CrtHelper->setAutoAbandon( retries ); }
 			void setCleaningUp( bool cleanFlag ){ m_IsCleaningUp = cleanFlag; }

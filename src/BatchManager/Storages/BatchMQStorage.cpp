@@ -24,11 +24,9 @@
 
 using namespace FinTP;
 
-BatchMQStorage::BatchMQStorage( TransportHelper::TRANSPORT_HELPER_TYPE helperType ) : BatchStorageBase()
+BatchMQStorage::BatchMQStorage():BatchStorageBase(),
+	m_CrtHelper( NULL ), m_BufferSize( 1000 ), m_IsCleaningUp( false )
 {
-	m_CrtHelper = TransportHelper::CreateHelper( helperType );
-	m_BufferSize = 10000;
-	m_IsCleaningUp = false;
 }
 
 BatchMQStorage::~BatchMQStorage()
@@ -57,8 +55,18 @@ BatchMQStorage::~BatchMQStorage()
 	} catch ( ... ) {}
 }
 
+void BatchMQStorage::initialize( TransportHelper::TRANSPORT_HELPER_TYPE helperType )
+{
+	if ( m_CrtHelper == NULL )
+		m_CrtHelper = TransportHelper::CreateHelper( helperType );
+	else
+		throw runtime_error( "MQ storage already initialized" );
+}
+
 void BatchMQStorage::enqueue( BatchResolution& resolution )
 {
+	if ( m_CrtHelper == NULL )
+		throw runtime_error( "MQ storage not initialized" );
 	DEBUG( "Enqueue" );
 	BatchItem item = resolution.getItem();
 
@@ -87,6 +95,8 @@ void BatchMQStorage::enqueue( BatchResolution& resolution )
 
 BatchItem BatchMQStorage::dequeue()
 {
+	if ( m_CrtHelper == NULL )
+		throw runtime_error( "MQ storage not initialized" );
 	DEBUG( "Dequeue" );
 
 	BatchItem item;
@@ -118,12 +128,16 @@ BatchItem BatchMQStorage::dequeue()
 
 void BatchMQStorage::close( const string& storageId )
 {
+	if ( m_CrtHelper == NULL )
+		throw runtime_error( "MQ storage not initialized" );
 	m_CrtHelper->closeQueue(); 
 }
 
 // open storage
 void BatchMQStorage::open( const string& storageId, ios_base::openmode openMode )
 {	
+	if ( m_CrtHelper == NULL )
+		throw runtime_error( "MQ storage not initialized" );
 	m_CrtStorageId = storageId;
 	m_CrtHelper->connect( m_QueueManager, m_ChDef );
 	m_CrtHelper->openQueue( m_Queue );
