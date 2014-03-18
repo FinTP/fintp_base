@@ -32,17 +32,17 @@ using namespace FinTP;
 XERCES_CPP_NAMESPACE_USE
 
 // config section parameters
-const string MqFilter::MQQUEUE = "WMQQueue";
-const string MqFilter::MQBACKUPQUEUE = "WMQBackupQueue";
-const string MqFilter::MQMANAGER = "WMQQMgr";
+const string MqFilter::MQQUEUE = "MQQueue";
+const string MqFilter::MQBACKUPQUEUE = "MQBackupQueue";
+const string MqFilter::MQMANAGER = "MQQMgr";
 const string MqFilter::MQURI = "MQURI";
 const string MqFilter::MQHELPERTYPE= "MQManagerType";
-const string MqFilter::MQRPLTransportURI = "WMQRplChDef";
+const string MqFilter::MQRPLTransportURI = "MQRplChDef";
 const string MqFilter::MQBATCH = "batch";
 const string MqFilter::MQFORMAT = "format";
-const string MqFilter::MQRPLMESSAGETYPE = "WMQRplMsgType";
-const string MqFilter::MQRPLUSRDATA = "WMQRplUsrData";
-const string MqFilter::MQRPLMESSAGEFORMAT = "WMQRplMsgFmt";
+const string MqFilter::MQRPLMESSAGETYPE = "MQRplMsgType";
+const string MqFilter::MQRPLUSRDATA = "MQRplUsrData";
+const string MqFilter::MQRPLMESSAGEFORMAT = "MQRplMsgFmt";
 
 //transportHeaders parameters
 const string MqFilter::MQMSGID = "MQMSGID";
