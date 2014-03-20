@@ -48,6 +48,8 @@ map<Plugin*, void*> RoutingMessageEvaluator::m_RegisteredPlugins;
 typedef map<Plugin*, void*>::const_iterator pluginIterator;
 #endif
 
+string (*RoutingMessageEvaluator::m_GetBatchTypeFunction)( const string& batchId, const string& tableName, const string& sender ) = NULL;
+
 RoutingKeywordCollection* RoutingMessageEvaluator::m_Keywords = NULL;
 
 // Feedback codes
@@ -714,22 +716,13 @@ string RoutingMessageEvaluator::internalGetField( const string& field )
 	if ( m_Keywords->find( field ) == m_Keywords->end() )
 	{
 		if ( field == InternalXmlPayload::getFieldName( InternalXmlPayload::MESSAGETYPE ) )
-		{
-			const DOMElement* root = m_Document->getDocumentElement();
-			for ( XERCES_CPP_NAMESPACE_QUALIFIER DOMNode* key = root->getFirstChild(); key != 0; key=key->getNextSibling() )
-			{
-				if ( key->getNodeType() != DOMNode::ELEMENT_NODE )
-				continue;
-
-				return localForm( key->getLocalName() );
-			}
-		}
+			return getMessageType();
 	}
 	else
 	{
-		string messageType = internalGetField( InternalXmlPayload::MESSAGETYPE );
-		string xpath = GetKeywordXPath( messageType, field );
-		string value = XPathHelper::SerializeToString( XPathHelper::Evaluate( xpath, m_XalanDocument, m_Namespace ) );
+		const string messageType = getMessageType();
+		const string xpath = GetKeywordXPath( messageType, field );
+		const string value = XPathHelper::SerializeToString( XPathHelper::Evaluate( xpath, m_XalanDocument, m_Namespace ) );
 		return EvaluateKeywordValue( messageType, value, field );
 	}
 
@@ -743,4 +736,21 @@ const vector<string> RoutingMessageEvaluator::getKeywordNames()
 		result.push_back( it->first );
 
 	return result;
+}
+
+
+void RoutingMessageEvaluator::setGetBatchTypeFunction( string (*function)(const string& batchId, const string& tableName, const string& sender) )
+{
+	if ( m_GetBatchTypeFunction != NULL )
+		throw runtime_error( "GetBatchType function already set." );
+
+	m_GetBatchTypeFunction = function;
+}
+
+string RoutingMessageEvaluator::getBatchType( const string& batchId, const string& tableName, const string& sender )
+{
+	if ( m_GetBatchTypeFunction == NULL )
+		throw runtime_error( "GetBatchType function not set." );
+
+	return m_GetBatchTypeFunction( batchId, tableName, sender );
 }
