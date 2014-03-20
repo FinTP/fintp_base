@@ -90,21 +90,21 @@ class ExportedObject CorrelationOptions
 
 		enum SAAACKMethod
 		{
-			SAA_METHOD_WMQID = 100,
+			SAA_METHOD_MQID = 100,
 			SAA_METHOD_TRN = 101,
 			SAA_METHOD_CORRELID = 102
 		};
 
 		enum SwiftACKMethod
 		{
-			METHOD_WMQID = 150,
+			METHOD_MQID = 150,
 			METHOD_TRN = 151,
 			METHOD_CORRELID = 152
 		};
 
 		enum TFDACKMethod
 		{
-			TMETHOD_WMQID = 200,
+			TMETHOD_MQID = 200,
 			TMETHOD_MIR = 201,
 			TMETHOD_CORRELID = 202
 		};
@@ -115,8 +115,8 @@ class ExportedObject CorrelationOptions
 			{
 				case CorrelationOptions::SAA_METHOD_TRN :
 					return "TRN";
-				case CorrelationOptions::SAA_METHOD_WMQID :
-					return "WMQID";
+				case CorrelationOptions::SAA_METHOD_MQID :
+					return "MQID";
 				case CorrelationOptions::SAA_METHOD_CORRELID :
 					return "CORRELID";
 				default :
@@ -130,8 +130,8 @@ class ExportedObject CorrelationOptions
 			{
 				case CorrelationOptions::METHOD_TRN :
 					return "TRN";
-				case CorrelationOptions::METHOD_WMQID :
-					return "WMQID";
+				case CorrelationOptions::METHOD_MQID :
+					return "MQID";
 				case CorrelationOptions::METHOD_CORRELID :
 					return "CORRELID";
 				default :
@@ -145,8 +145,8 @@ class ExportedObject CorrelationOptions
 			{
 				case CorrelationOptions::TMETHOD_MIR :
 					return "MIR";
-				case CorrelationOptions::TMETHOD_WMQID :
-					return "WMQID";
+				case CorrelationOptions::TMETHOD_MQID :
+					return "MQID";
 				case CorrelationOptions::TMETHOD_CORRELID :
 					return "CORRELID";
 				default :
@@ -178,30 +178,31 @@ class ExportedObject RoutingMessageEvaluator
 		
 		enum FeedbackProvider
 		{
-			FEEDBACKPROVIDER_QPI = 0,
-			FEEDBACKPROVIDER_WMQ = 1,
+			FEEDBACKPROVIDER_FTP = 0,
+			FEEDBACKPROVIDER_MQ = 1,
 			FEEDBACKPROVIDER_TFD = 2,
 			FEEDBACKPROVIDER_UNK = 3
 		};
 
-		static const string FEEDBACKQPI_ACK;
-		static const string FEEDBACKQPI_APPROVED;
-		static const string FEEDBACKQPI_RJCT;
-		static const string FEEDBACKQPI_REACT;
-		static const string FEEDBACKQPI_MSG;
-		static const string FEEDBACKQPI_LATERJCT;
-		static const string FEEDBACKQPI_REFUSE;
-		static const string FEEDBACKQPI_LOSTRFD;
-		static const string FEEDBACKQPI_NOREACT;
+		static const string FEEDBACKFTP_ACK;
+		static const string FEEDBACKFTP_APPROVED;
+		static const string FEEDBACKFTP_CSMAPPROVED;
+		static const string FEEDBACKFTP_RJCT;
+		static const string FEEDBACKFTP_REACT;
+		static const string FEEDBACKFTP_MSG;
+		static const string FEEDBACKFTP_LATERJCT;
+		static const string FEEDBACKFTP_REFUSE;
+		static const string FEEDBACKFTP_LOSTRFD;
+		static const string FEEDBACKFTP_NOREACT;
 		
-		static const string AGGREGATIONTOKEN_QPIID;
-		static const string AGGREGATIONTOKEN_QPICODE;
+		static const string AGGREGATIONTOKEN_FTPID;
+		static const string AGGREGATIONTOKEN_FTPCODE;
 		static const string AGGREGATIONTOKEN_SAACODE;
 		static const string AGGREGATIONTOKEN_TFDCODE;
 		static const string AGGREGATIONTOKEN_SWIFTCODE;
 		static const string AGGREGATIONTOKEN_MIR;
-		static const string AGGREGATIONTOKEN_WMQID;
-		static const string AGGREGATIONTOKEN_WMQCODE;
+		static const string AGGREGATIONTOKEN_MQID;
+		static const string AGGREGATIONTOKEN_MQCODE;
 		static const string AGGREGATIONTOKEN_PAYLOAD;
 		static const string AGGREGATIONTOKEN_REQUESTOR;
 		static const string AGGREGATIONTOKEN_BATCHID;
@@ -211,7 +212,7 @@ class ExportedObject RoutingMessageEvaluator
 		static const string AGGREGATIONTOKEN_OSESSION;
 		static const string AGGREGATIONTOKEN_ISESSION;
 		static const string AGGREGATIONTOKEN_ISSUER;
-		//same as AGGREGATIONTOKEN_QPIID but used to override bussines message info
+		//same as AGGREGATIONTOKEN_FTPID but used to override bussines message info
 		static const string AGGREGATIONTOKEN_CORRELID;
 	
 	protected :
@@ -300,7 +301,7 @@ class ExportedObject RoutingMessageEvaluator
 				m_SwiftACKMethod = CorrelationOptions::METHOD_TRN;
 			else if ( method == "CORRELID" )
 				m_SwiftACKMethod = CorrelationOptions::METHOD_CORRELID;
-			else m_SwiftACKMethod = CorrelationOptions::METHOD_WMQID;
+			else m_SwiftACKMethod = CorrelationOptions::METHOD_MQID;
 		}
 
 		static void setSAAACKMethod( const string& method )
@@ -309,13 +310,13 @@ class ExportedObject RoutingMessageEvaluator
 				m_SAAACKMethod = CorrelationOptions::SAA_METHOD_TRN;
 			else if ( method == "CORRELID" )
 				m_SAAACKMethod = CorrelationOptions::SAA_METHOD_CORRELID;
-			else m_SAAACKMethod = CorrelationOptions::SAA_METHOD_WMQID;
+			else m_SAAACKMethod = CorrelationOptions::SAA_METHOD_MQID;
 		}
 
 		static void setTFDACKMethod( const string& method )
 		{
-			if ( method == "WMQID" )
-				m_TFDACKMethod = CorrelationOptions::TMETHOD_WMQID;
+			if ( method == "MQID" )
+				m_TFDACKMethod = CorrelationOptions::TMETHOD_MQID;
 			else if ( method == "CORRELID" )
 				m_TFDACKMethod = CorrelationOptions::TMETHOD_CORRELID;
 			else m_TFDACKMethod = CorrelationOptions::TMETHOD_MIR;
@@ -397,7 +398,7 @@ class ExportedObject RoutingMessageEvaluator
 		
 		virtual string getOverrideFeedback() { return ""; }
 		virtual string getOverrideFeedbackId() { return ""; }
-		virtual RoutingMessageEvaluator::FeedbackProvider getOverrideFeedbackProvider() { return RoutingMessageEvaluator::FEEDBACKPROVIDER_WMQ; }
+		virtual RoutingMessageEvaluator::FeedbackProvider getOverrideFeedbackProvider() { return RoutingMessageEvaluator::FEEDBACKPROVIDER_MQ; }
 				
 		const XERCES_CPP_NAMESPACE_QUALIFIER DOMDocument* getDocument() const { return m_Document; }
 		RoutingMessageEvaluator::EvaluatorType getEvaluatorType() const { return m_EvaluatorType; }

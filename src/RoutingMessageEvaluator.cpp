@@ -51,29 +51,30 @@ typedef map<Plugin*, void*>::const_iterator pluginIterator;
 RoutingKeywordCollection* RoutingMessageEvaluator::m_Keywords = NULL;
 
 // Feedback codes
-const string RoutingMessageEvaluator::FEEDBACKQPI_ACK = "QPI02";
-const string RoutingMessageEvaluator::FEEDBACKQPI_APPROVED = "FTM00";
-const string RoutingMessageEvaluator::FEEDBACKQPI_RJCT = "QPI09";
-const string RoutingMessageEvaluator::FEEDBACKQPI_REACT = "QPI12";
-const string RoutingMessageEvaluator::FEEDBACKQPI_MSG = "QPI00";
-const string RoutingMessageEvaluator::FEEDBACKQPI_LATERJCT = "QPI10";
-const string RoutingMessageEvaluator::FEEDBACKQPI_REFUSE = "RFD";
-const string RoutingMessageEvaluator::FEEDBACKQPI_LOSTRFD = "QPI99";
-const string RoutingMessageEvaluator::FEEDBACKQPI_NOREACT = "QPI21";
+const string RoutingMessageEvaluator::FEEDBACKFTP_ACK = "FTP02";
+const string RoutingMessageEvaluator::FEEDBACKFTP_APPROVED = "FTM00";
+const string RoutingMessageEvaluator::FEEDBACKFTP_CSMAPPROVED = "CSM00";
+const string RoutingMessageEvaluator::FEEDBACKFTP_RJCT = "FTP09";
+const string RoutingMessageEvaluator::FEEDBACKFTP_REACT = "FTP12";
+const string RoutingMessageEvaluator::FEEDBACKFTP_MSG = "FTP00";
+const string RoutingMessageEvaluator::FEEDBACKFTP_LATERJCT = "FTP10";
+const string RoutingMessageEvaluator::FEEDBACKFTP_REFUSE = "RFD";
+const string RoutingMessageEvaluator::FEEDBACKFTP_LOSTRFD = "FTP99";
+const string RoutingMessageEvaluator::FEEDBACKFTP_NOREACT = "FTP21";
 
 // RoutingMessageEvaluator implementation 
 // new dbv2
-const string RoutingMessageEvaluator::AGGREGATIONTOKEN_QPIID = "CORRELID";
-const string RoutingMessageEvaluator::AGGREGATIONTOKEN_QPICODE = "APPCODE";
+const string RoutingMessageEvaluator::AGGREGATIONTOKEN_FTPID = "CORRELID";
+const string RoutingMessageEvaluator::AGGREGATIONTOKEN_FTPCODE = "APPCODE";
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_SAACODE = "INTERFACECODE";
-const string RoutingMessageEvaluator::AGGREGATIONTOKEN_TFDCODE = "CORESPCODE";
+const string RoutingMessageEvaluator::AGGREGATIONTOKEN_TFDCODE = "CORRESPCODE";
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_SWIFTCODE = "NETWORKCODE";
 // old ones left in dbv2
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_MIR = "SWIFTMIR";
-const string RoutingMessageEvaluator::AGGREGATIONTOKEN_WMQID = "WMQID";
+const string RoutingMessageEvaluator::AGGREGATIONTOKEN_MQID = "MQID";
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_PAYLOAD = "PAYLOAD";
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_REQUESTOR = "REQUESTOR";
-const string RoutingMessageEvaluator::AGGREGATIONTOKEN_WMQCODE = "WMQFEED";
+const string RoutingMessageEvaluator::AGGREGATIONTOKEN_MQCODE = "MQFEED";
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_BATCHID = "BATCHID";
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_OBATCHID = "OBATCHID";
 const string RoutingMessageEvaluator::AGGREGATIONTOKEN_BATCHSEQ = "BATCHSEQ";
@@ -86,28 +87,28 @@ const string RoutingMessageEvaluator::AGGREGATIONTOKEN_CORRELID = "CORRELID";
 const string RoutingMessageEvaluator::m_FeedbackProviders[ FEEDBACK_PROVIDER_COUNT ] = { "Q", "W", "T", "W", "T", "A", "S", "U" };
 
 const string RoutingMessageEvaluator::m_FeedbackTokens[ FEEDBACK_PROVIDER_COUNT ] = { 
-	RoutingMessageEvaluator::AGGREGATIONTOKEN_QPICODE, 
-	RoutingMessageEvaluator::AGGREGATIONTOKEN_WMQCODE, 
+	RoutingMessageEvaluator::AGGREGATIONTOKEN_FTPCODE,
+	RoutingMessageEvaluator::AGGREGATIONTOKEN_MQCODE,
 	RoutingMessageEvaluator::AGGREGATIONTOKEN_TFDCODE, 
-	RoutingMessageEvaluator::AGGREGATIONTOKEN_WMQCODE,
+	RoutingMessageEvaluator::AGGREGATIONTOKEN_MQCODE,
 	RoutingMessageEvaluator::AGGREGATIONTOKEN_TFDCODE, 
 	RoutingMessageEvaluator::AGGREGATIONTOKEN_SAACODE, 
 	RoutingMessageEvaluator::AGGREGATIONTOKEN_SWIFTCODE, 
 	"UNKCODE" };
 
 const string RoutingMessageEvaluator::m_FeedbackIds[ FEEDBACK_PROVIDER_COUNT ] = { 
-	RoutingMessageEvaluator::AGGREGATIONTOKEN_QPIID, 
-	RoutingMessageEvaluator::AGGREGATIONTOKEN_WMQID, 
+	RoutingMessageEvaluator::AGGREGATIONTOKEN_FTPID,
+	RoutingMessageEvaluator::AGGREGATIONTOKEN_MQID,
 	RoutingMessageEvaluator::AGGREGATIONTOKEN_BATCHID, 
 	RoutingMessageEvaluator::AGGREGATIONTOKEN_TRN, 
 	RoutingMessageEvaluator::AGGREGATIONTOKEN_MIR,
-	RoutingMessageEvaluator::AGGREGATIONTOKEN_WMQID, 
-	RoutingMessageEvaluator::AGGREGATIONTOKEN_WMQID, 
+	RoutingMessageEvaluator::AGGREGATIONTOKEN_MQID,
+	RoutingMessageEvaluator::AGGREGATIONTOKEN_MQID,
 	"UNKID" };
 
 	bool RoutingMessageEvaluator::m_MarkACHApproved = false;
-	CorrelationOptions::SAAACKMethod RoutingMessageEvaluator::m_SAAACKMethod = CorrelationOptions::SAA_METHOD_WMQID;
-	CorrelationOptions::SwiftACKMethod RoutingMessageEvaluator::m_SwiftACKMethod = CorrelationOptions::METHOD_WMQID;
+	CorrelationOptions::SAAACKMethod RoutingMessageEvaluator::m_SAAACKMethod = CorrelationOptions::SAA_METHOD_MQID;
+	CorrelationOptions::SwiftACKMethod RoutingMessageEvaluator::m_SwiftACKMethod = CorrelationOptions::METHOD_MQID;
 	CorrelationOptions::TFDACKMethod RoutingMessageEvaluator::m_TFDACKMethod = CorrelationOptions::TMETHOD_MIR;
 
 	const string InternalXmlPayload::m_FieldNames[ INTERNALXMLPAYLOAD_FIELDCOUNT ] = {
@@ -470,7 +471,7 @@ string RoutingMessageEvaluator::serializeFeedback( const RoutingAggregationCode&
 	RoutingMessageEvaluator::FeedbackProvider provider = getProviderById( feedback.getCorrelToken() );
 	string retValue;
 
-	// HACK - WMQID may be used as correlation token, but TFD code is actually the feedback, so..
+	// HACK - MQID may be used as correlation token, but TFD code is actually the feedback, so..
 	try
 	{
 		retValue = m_FeedbackProviders[ provider ] + string( "|" ) + feedback.getCorrelId() + string( "|" ) + feedback.getAggregationField( m_FeedbackTokens[ provider ] );
