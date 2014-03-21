@@ -77,244 +77,297 @@ void BatchXMLfileStorage::enqueue( BatchResolution& resolution )
 	XERCES_CPP_NAMESPACE_QUALIFIER DOMDocument* currentItem = NULL;
 	
 	DEBUG( "Current item sequence is " << item.getSequence() );
-	
-	try
-	{
-		// if m_CrtSequence is first sequence create the BatchXml DOM 
-		// the item will become the main document
-		if ( m_CrtSequence == BatchItem::FIRST_IN_SEQUENCE )
-		{			
-			m_CrtStorage = XmlUtil::DeserializeFromString( resolution.getItem().getPayload() );
-			m_CrtStorageRoot = m_CrtStorage->getDocumentElement();
-			
-			DEBUG( "Root BATCH XML added." );		
-		}
-		else
-		// if not first sequence append to BatchXml DOM 
-		{
-			// serialize the current item
-			// item will be added as a child to the main document
-			currentItem = XmlUtil::DeserializeFromString( resolution.getItem().getPayload() );
-			DOMElement* currentItemRoot = currentItem->getDocumentElement();
-			string itemNamespace = XmlUtil::getNamespace( m_CrtStorage );
-			string curXPath = "";
-			if ( m_XPath.length() > 0 ) 
-			{
-				DEBUG( "Add current item [" << resolution.getItem().getPayload() << "]" );
 
-				// look for insert node if not found before
+	if ( !m_XsltFileName.empty() )
+	{
+		XERCES_CPP_NAMESPACE_QUALIFIER DOMDocument* payload = NULL;
+		try
+		{
+			payload = XmlUtil::DeserializeFromString( item.getPayload() );
+			NameValueCollection transportHeaderCollection;
+			transportHeaderCollection.Add( XSLTFilter::XSLTFILE, m_XsltFileName );
+			transportHeaderCollection.Add( "XSLTPARAMPOSITION", StringUtil::ToString( m_CrtSequence-1 ) );
+			WorkItem< ManagedBuffer > xsltOutput( new ManagedBuffer() );
+			m_XsltFilter.ProcessMessage( payload, xsltOutput, transportHeaderCollection, true );
+			const string xsltOutputPayload = xsltOutput.get()->str();
+			if ( xsltOutputPayload.empty() )
+				throw runtime_error( "Payload not supported" );
+
+			if ( m_CrtSequence == BatchItem::FIRST_IN_SEQUENCE )
+			{
+				m_CrtStorage = XmlUtil::DeserializeFromString( xsltOutputPayload );
+				m_CrtStorageRoot = m_CrtStorage->getDocumentElement();
+			}
+			else
+			{
+				currentItem = XmlUtil::DeserializeFromString( xsltOutputPayload );
+				DOMElement* currentItemRoot = currentItem->getDocumentElement();
 				if ( m_CrtInsertNode == NULL )
 				{
-					m_CrtInsertNode = m_CrtStorageRoot;
+					DOMNodeList* list = m_CrtStorage->getElementsByTagName( currentItemRoot->getTagName() );
+					m_CrtInsertNode = static_cast< DOMElement* >( list->item( 0 ) );
+				}
+				m_CrtInsertNode->appendChild( m_CrtStorage->importNode( currentItemRoot->getFirstChild(), true ) );
+			}
+		}
+		catch( ... )
+		{
+			if ( currentItem != NULL )
+				currentItem->release();
+			if ( payload != NULL )
+				payload->release();
+			if ( m_CrtStorage != NULL )
+			{
+				m_CrtStorage->release();
+				m_CrtStorage = NULL;
+			}
+			throw;
+		}
+
+		if ( currentItem != NULL )
+			currentItem->release();
+		if ( payload != NULL )
+			payload->release();
+	}
+	else
+	{
+
+		try
+		{
+			// if m_CrtSequence is first sequence create the BatchXml DOM
+			// the item will become the main document
+			if ( m_CrtSequence == BatchItem::FIRST_IN_SEQUENCE )
+			{
+				m_CrtStorage = XmlUtil::DeserializeFromString( resolution.getItem().getPayload() );
+				m_CrtStorageRoot = m_CrtStorage->getDocumentElement();
+
+				DEBUG( "Root BATCH XML added." );
+			}
+			else
+			// if not first sequence append to BatchXml DOM
+			{
+				// serialize the current item
+				// item will be added as a child to the main document
+				currentItem = XmlUtil::DeserializeFromString( resolution.getItem().getPayload() );
+				DOMElement* currentItemRoot = currentItem->getDocumentElement();
+				string itemNamespace = XmlUtil::getNamespace( m_CrtStorage );
+				string curXPath = "";
+				if ( m_XPath.length() > 0 )
+				{
+					DEBUG( "Add current item [" << resolution.getItem().getPayload() << "]" );
+
+					// look for insert node if not found before
 					if ( m_CrtInsertNode == NULL )
-						throw runtime_error( "Storage root not created" );
+					{
+						m_CrtInsertNode = m_CrtStorageRoot;
+						if ( m_CrtInsertNode == NULL )
+							throw runtime_error( "Storage root not created" );
+						/*
+						StringUtil splitter( m_XPath );
+
+						// simple xpath support only
+						splitter.Split( "/" );
+
+						while( splitter.MoreTokens() )
+						{
+							string nextToken = splitter.NextToken();
+							DOMNodeList* result = m_CrtInsertNode->getElementsByTagName( unicodeForm( nextToken ) );
+							if ( ( result == NULL ) || ( result->getLength() == 0 ) )
+							{
+								stringstream errorMessage;
+								errorMessage << "Missing required [" << nextToken << "] element in [" << localForm( m_CrtInsertNode->getNodeName() ) << "] node";
+								throw runtime_error( errorMessage.str() );
+							}
+
+							m_CrtInsertNode = dynamic_cast< DOMElement* >( result->item( 0 ) );
+						}
+						*/
+						vector< string > splitXPath = getXPath( itemNamespace );
+						vector< string >::iterator itToken;
+						for( itToken = splitXPath.begin(); itToken < splitXPath.end() ; itToken++ )
+						{
+							DOMNodeList* result = m_CrtInsertNode->getElementsByTagName( unicodeForm( *itToken ) );
+							if ( ( result == NULL ) || ( result->getLength() == 0 ) )
+							{
+								stringstream errorMessage;
+								errorMessage << "Missing required [" << *itToken << "] element in [" << localForm( m_CrtInsertNode->getNodeName() ) << "] node";
+								throw runtime_error( errorMessage.str() );
+							}
+							m_CrtInsertNode = dynamic_cast< DOMElement* >( result->item( 0 ) );
+							curXPath += *itToken + "/";
+						}
+						curXPath.erase( curXPath.size()-2 );
+						// move insert node up a level
+						m_CrtInsertNode = dynamic_cast< DOMElement* >( m_CrtInsertNode->getParentNode() );
+						DEBUG( "Add current item on element [" << curXPath << "]" );
+					}
+
+					// try to find the item in the child too
+					bool xpathOnChild = true;
 					/*
 					StringUtil splitter( m_XPath );
 
 					// simple xpath support only 
 					splitter.Split( "/" );
+					DOMElement* currentItemMovedRoot = currentItemRoot;
 
-					while( splitter.MoreTokens() )
+					while( xpathOnChild && splitter.MoreTokens() )
 					{
 						string nextToken = splitter.NextToken();
-						DOMNodeList* result = m_CrtInsertNode->getElementsByTagName( unicodeForm( nextToken ) );
-						if ( ( result == NULL ) || ( result->getLength() == 0 ) )
+						DOMNodeList* resultItem = currentItemMovedRoot->getElementsByTagName( unicodeForm( nextToken ) );
+						if ( ( resultItem == NULL ) || ( resultItem->getLength() == 0 ) )
 						{
-							stringstream errorMessage;
-							errorMessage << "Missing required [" << nextToken << "] element in [" << localForm( m_CrtInsertNode->getNodeName() ) << "] node";
-							throw runtime_error( errorMessage.str() );
+							DEBUG( "Attempt to apply [" << m_XPath << "] on child element failed. Root will be added." );
+							xpathOnChild = false;
+							break;
 						}
-
-						m_CrtInsertNode = dynamic_cast< DOMElement* >( result->item( 0 ) );
+						else
+							currentItemMovedRoot = dynamic_cast< DOMElement* >( resultItem->item( 0 ) );
 					}
 					*/
+					DOMElement* currentItemMovedRoot = currentItemRoot;
 					vector< string > splitXPath = getXPath( itemNamespace );
 					vector< string >::iterator itToken;
-					for( itToken = splitXPath.begin(); itToken < splitXPath.end() ; itToken++ )
+					itToken = splitXPath.begin();
+					while( xpathOnChild && ( itToken != splitXPath.end() ) )
 					{
-						DOMNodeList* result = m_CrtInsertNode->getElementsByTagName( unicodeForm( *itToken ) );
-						if ( ( result == NULL ) || ( result->getLength() == 0 ) )
+						DOMNodeList* resultItem = currentItemMovedRoot->getElementsByTagName( unicodeForm( *itToken ) );
+						if ( ( resultItem == NULL ) || ( resultItem->getLength() == 0 ) )
 						{
-							stringstream errorMessage;
-							errorMessage << "Missing required [" << *itToken << "] element in [" << localForm( m_CrtInsertNode->getNodeName() ) << "] node";
-							throw runtime_error( errorMessage.str() );
+							DEBUG( "Attempt to apply [" << *itToken << "] on child element failed. Root will be added." );
+							xpathOnChild = false;
+							break;
 						}
-						m_CrtInsertNode = dynamic_cast< DOMElement* >( result->item( 0 ) );
-						curXPath += *itToken + "/";
+						else
+							currentItemMovedRoot = dynamic_cast< DOMElement* >( resultItem->item( 0 ) );
+						itToken++;
 					}
-					curXPath.erase( curXPath.size()-2 );
-					// move insert node up a level 
-					m_CrtInsertNode = dynamic_cast< DOMElement* >( m_CrtInsertNode->getParentNode() );
-					DEBUG( "Add current item on element [" << curXPath << "]" );
-				}
-				
-				// try to find the item in the child too
-				bool xpathOnChild = true;
-				/*
-				StringUtil splitter( m_XPath );
-
-				// simple xpath support only 
-				splitter.Split( "/" );
-				DOMElement* currentItemMovedRoot = currentItemRoot;
-
-				while( xpathOnChild && splitter.MoreTokens() )
-				{
-					string nextToken = splitter.NextToken();
-					DOMNodeList* resultItem = currentItemMovedRoot->getElementsByTagName( unicodeForm( nextToken ) );
-					if ( ( resultItem == NULL ) || ( resultItem->getLength() == 0 ) )
+					if ( xpathOnChild )
 					{
-						DEBUG( "Attempt to apply [" << m_XPath << "] on child element failed. Root will be added." );
-						xpathOnChild = false;
-						break;
+						DEBUG( "Applying [" << curXPath << "] on child element. Selected node will be added as child." );
+						currentItemRoot = currentItemMovedRoot;
 					}
-					else
-						currentItemMovedRoot = dynamic_cast< DOMElement* >( resultItem->item( 0 ) );
 				}
-				*/
-				DOMElement* currentItemMovedRoot = currentItemRoot;
-				vector< string > splitXPath = getXPath( itemNamespace );
-				vector< string >::iterator itToken;
-				itToken = splitXPath.begin();
-				while( xpathOnChild && ( itToken != splitXPath.end() ) )
+				else
 				{
-					DOMNodeList* resultItem = currentItemMovedRoot->getElementsByTagName( unicodeForm( *itToken ) );
-					if ( ( resultItem == NULL ) || ( resultItem->getLength() == 0 ) )
-					{
-						DEBUG( "Attempt to apply [" << *itToken << "] on child element failed. Root will be added." );
-						xpathOnChild = false;
-						break;
-					}
-					else
-						currentItemMovedRoot = dynamic_cast< DOMElement* >( resultItem->item( 0 ) );
-					itToken++;
+					DEBUG( "Add current item on element [/] : " << resolution.getItem().getPayload() );
+					m_CrtInsertNode = m_CrtStorageRoot;
 				}
-				if ( xpathOnChild )
+
+				if ( m_CrtStorage == NULL )
+					throw runtime_error( "Storage not created" );
+
+				if ( m_CrtInsertNode == NULL )
+					throw runtime_error( "Storage root not created" );
+
+				m_CrtInsertNode->appendChild( m_CrtStorage->importNode( currentItemRoot, true ) );
+
+				DEBUG( "Current item added" );
+				if ( currentItem != NULL )
 				{
-					DEBUG( "Applying [" << curXPath << "] on child element. Selected node will be added as child." );
-					currentItemRoot = currentItemMovedRoot;
+					currentItem->release();
+					currentItem = NULL;
 				}
+			}
+		}
+		catch( const XMLException& e )
+		{
+			if( m_CrtStorage != NULL )
+			{
+				m_CrtStorage->release();
+				m_CrtStorage = NULL;
+			}
+
+			if( currentItem != NULL )
+			{
+				currentItem->release();
+				currentItem = NULL;
+			}
+			m_CrtStorageRoot = NULL;
+			m_CrtInsertNode = NULL;
+			TRACE_GLOBAL( "XMLException"  << localForm( e.getMessage() ) );  		
+			throw runtime_error( localForm( e.getMessage() ) );
+  		}
+		catch( const DOMException& e )
+		{
+			if( m_CrtStorage != NULL )
+			{
+				m_CrtStorage->release();
+				m_CrtStorage = NULL;
+			}
+  			
+			if( currentItem != NULL )
+			{
+				currentItem->release();
+				currentItem = NULL;
+			}
+			m_CrtStorageRoot = NULL;
+			m_CrtInsertNode = NULL;
+			TRACE_GLOBAL( "DOMException "  << e.code );
+			string message;
+
+			const unsigned int maxChars = 2047;
+
+			XMLCh errText[maxChars + 1];
+      
+			// attemt to read message text
+			if ( DOMImplementation::loadDOMExceptionMsg( e.code, errText, maxChars ) )
+			{
+				message = localForm( errText );
 			}
 			else
 			{
-				DEBUG( "Add current item on element [/] : " << resolution.getItem().getPayload() );
-				m_CrtInsertNode = m_CrtStorageRoot;
+				// format error code
+				stringstream messageBuffer;
+				messageBuffer << "DOMException error code : [ " << ( int )e.code << "]";
+				message = messageBuffer.str();
 			}
-			
-			if ( m_CrtStorage == NULL )
-				throw runtime_error( "Storage not created" );
-
-			if ( m_CrtInsertNode == NULL )
-				throw runtime_error( "Storage root not created" );
-
-			m_CrtInsertNode->appendChild( m_CrtStorage->importNode( currentItemRoot, true ) );
-	
-			DEBUG( "Current item added" );
-			if ( currentItem != NULL )
+			throw runtime_error( message );
+		}
+		catch( const std::exception& e )
+		{
+			if( m_CrtStorage != NULL )
 			{
-  				currentItem->release();
-  				currentItem = NULL;
-			}	
+				m_CrtStorage->release();
+				m_CrtStorage = NULL;
+			}
+  			
+			if( currentItem != NULL )
+			{
+				currentItem->release();
+				currentItem = NULL;
+			}
+			m_CrtStorageRoot = NULL;
+			m_CrtInsertNode = NULL;
+			stringstream messageBuffer;
+			messageBuffer << typeid( e ).name() << " exception [" << e.what() << "]";
+			TRACE_GLOBAL( messageBuffer.str() );
+
+			throw runtime_error( messageBuffer.str() );
+  		}
+		catch( ... )
+		{
+			if( m_CrtStorage != NULL )
+			{
+				m_CrtStorage->release();
+				m_CrtStorage = NULL;
+			}
+
+			if( currentItem != NULL )
+			{
+				currentItem->release();
+				currentItem = NULL;
+			}
+			m_CrtStorageRoot = NULL;
+			m_CrtInsertNode = NULL;
+			TRACE_GLOBAL( "Unhandled exception" );
+		
+			throw;
 		}
 	}
-	catch( const XMLException& e )
-  	{
-  		if( m_CrtStorage != NULL )
-  		{
-			m_CrtStorage->release();
-  			m_CrtStorage = NULL;
-  		}
-  			
-  		if( currentItem != NULL )
-  		{
-  			currentItem->release();
-  			currentItem = NULL;
-  		}
-		m_CrtStorageRoot = NULL;
-		m_CrtInsertNode = NULL;
-  		TRACE_GLOBAL( "XMLException"  << localForm( e.getMessage() ) );  		
-  		throw runtime_error( localForm( e.getMessage() ) );
-  	}
-  	catch( const DOMException& e )
-  	{
-		if( m_CrtStorage != NULL )
-  		{
-			m_CrtStorage->release();
-  			m_CrtStorage = NULL;
-  		}
-  			
-  		if( currentItem != NULL )
-  		{
-  			currentItem->release();
-  			currentItem = NULL;
-  		}
-		m_CrtStorageRoot = NULL;
-		m_CrtInsertNode = NULL;
-  		TRACE_GLOBAL( "DOMException "  << e.code );
-  		string message;
-  		
-  		const unsigned int maxChars = 2047;
-		
-		XMLCh errText[maxChars + 1];
-      
-		// attemt to read message text
-    	if ( DOMImplementation::loadDOMExceptionMsg( e.code, errText, maxChars ) )
-    	{
-			message = localForm( errText );
-		}
-  		else
-  		{
-  			// format error code
-  			stringstream messageBuffer;
-  			messageBuffer << "DOMException error code : [ " << ( int )e.code << "]";
-    		message = messageBuffer.str();
-    	}		
- 		throw runtime_error( message );
- 	}
-	catch( const std::exception& e )
-	{
-		if( m_CrtStorage != NULL )
-  		{
-			m_CrtStorage->release();
-  			m_CrtStorage = NULL;
-  		}
-  			
-  		if( currentItem != NULL )
-  		{
-  			currentItem->release();
-  			currentItem = NULL;
-  		}
-  		m_CrtStorageRoot = NULL;
-		m_CrtInsertNode = NULL;		
-		stringstream messageBuffer;
-	  	messageBuffer << typeid( e ).name() << " exception [" << e.what() << "]";
-		TRACE_GLOBAL( messageBuffer.str() );
-
-    	//throw runtime_error( "Parse error" );
-    	throw runtime_error( messageBuffer.str() );
-  	}
-	catch( ... )
-	{
-		if( m_CrtStorage != NULL )
-  		{
-			m_CrtStorage->release();
-  			m_CrtStorage = NULL;
-  		}
-  			
-  		if( currentItem != NULL )
-  		{
-  			currentItem->release();
-  			currentItem = NULL;
-  		}	
-		m_CrtStorageRoot = NULL;
-		m_CrtInsertNode = NULL;
-		TRACE_GLOBAL( "Unhandled exception" );
-		
-		throw;
-	}    
-	
-	m_CrtSequence++;
-	DEBUG( "Next sequence is " << m_CrtSequence );
-	DEBUG_GLOBAL( "Current storage address [" << m_CrtStorage << "]" );
+		m_CrtSequence++;
+		DEBUG( "Next sequence is " << m_CrtSequence );
+		DEBUG_GLOBAL( "Current storage address [" << m_CrtStorage << "]" );
 }
 
 vector< string > BatchXMLfileStorage::getXPath( const string& itemNamespace )

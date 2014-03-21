@@ -106,6 +106,10 @@ src/SSL/P7MFilter.cpp	\
 src/SSL/P7MFilter.h	\
 src/SSL/SSLFilter.cpp	\
 src/SSL/SSLFilter.h	\
+src/Swift/SAAFilter.cpp	\
+src/Swif/SAAFilter.h	\
+src/Swift/SwiftFormatFilter.cpp	\
+src/Swift/SwiftFormatFilter.h	\
 src/Template/TemplateParser.cpp	\
 src/Template/TemplateParser.h	\
 src/Template/TemplateTransformFilter.cpp	\

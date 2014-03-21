@@ -62,7 +62,8 @@ namespace FinTP
 				SSL,
 				CHAIN,
 				P7M,
-				ZIP
+				ZIP,
+				SWIFTFORMAT
 			};
 			
 			/// \brief Input data type
@@ -98,7 +99,8 @@ namespace FinTP
 			/// \brief Return completed if the filter has successfully processed the message
 			enum FilterResult
 			{
-				Completed = 1
+				Completed = 1,
+				Fail = 2
 				// other values reserved for future use
 			};
 			

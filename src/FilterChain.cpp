@@ -32,6 +32,7 @@
 #include "Template/TemplateTransformFilter.h"
 #include "MQ/MqFilter.h"
 #include "Zip/ZipFilter.h"
+#include "Swift/SwiftFormatFilter.h"
 #if !defined( NO_DB ) && defined( WITH_ORACLE ) && defined( AQ )
 #include "MQ/AdvanceQueuing/AqFilter.h"
 #endif 
@@ -71,6 +72,8 @@ string FilterType::ToString( FilterType::FilterTypeEnum type )
 			return "P7M";
 		case FilterType::ZIP :
 			return "ZIP";
+		case FilterType::SWIFTFORMAT:
+			return "SWIFTFORMAT";
 	}
 	throw invalid_argument( "type" );
 }
@@ -109,6 +112,8 @@ FilterType::FilterTypeEnum FilterType::Parse( const string& type )
 		return FilterType::P7M;
 	if ( type == "ZIP" )
 		return FilterType::ZIP;
+	if ( type == "SWIFTFORMAT" )
+		return FilterType::SWIFTFORMAT;
 
 	throw invalid_argument( "type" );
 }
@@ -226,6 +231,9 @@ int FilterChain::AddFilter( FilterType::FilterTypeEnum type, NameValueCollection
 				break;
 			case FilterType::ZIP :
 				newFilter = new ZipFilter();
+				break;
+			case FilterType::SWIFTFORMAT:
+				newFilter = new SwiftFormatFilter();
 				break;
 #if !defined( NO_DB ) && defined( WITH_ORACLE ) && defined( AQ )
 			case FilterType::AQ : 

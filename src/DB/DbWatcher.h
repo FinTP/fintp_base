@@ -65,6 +65,7 @@ namespace FinTP
 			DatabaseProvider::PROVIDER_TYPE getProvider() const;
 
 			void setWatchOptions( int options ) { m_WatchOptions = options; }
+			void setDatabaseToXMLTrimm ( const bool trimmOption ) { m_DatabaseToXmlTrimmOption = trimmOption; }
 		
 		protected :
 				
@@ -78,6 +79,7 @@ namespace FinTP
 			string m_SelectSPName; 
 			DatabaseProvider::PROVIDER_TYPE m_DatabaseProvider;
 			ConnectionString m_ConnectionString;
+			bool m_DatabaseToXmlTrimmOption;
 	};
 }
 

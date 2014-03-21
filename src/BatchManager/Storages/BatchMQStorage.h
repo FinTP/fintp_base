@@ -52,6 +52,10 @@ namespace FinTP
 			void setTransportURI( const string& chDef ){ m_ChDef = chDef; }
 			void initialize( TransportHelper::TRANSPORT_HELPER_TYPE );
 			
+			// SAA-MQHA way for replies
+			void setReplyOptions( const string& replyOptions ){ m_ReplyOptions = replyOptions; };
+			void setReplyQueue( const string& replyQueue ){ m_ReplyQueue = replyQueue; }
+
 			void setAutoAbandon( const int& retries ){ m_CrtHelper->setAutoAbandon( retries ); }
 			void setCleaningUp( bool cleanFlag ){ m_IsCleaningUp = cleanFlag; }
 			bool getCleaningUp(){ return m_IsCleaningUp; }
@@ -62,7 +66,7 @@ namespace FinTP
 			TransportHelper* m_CrtHelper;
 			unsigned long m_BufferSize;
 			string m_CrtStorageId;
-			string m_Queue, m_BackupQueue, m_QueueManager, m_ChDef;
+			string m_Queue, m_BackupQueue, m_QueueManager, m_ChDef, m_ReplyQueue, m_ReplyOptions;
 			bool m_IsCleaningUp;
 	};
 }

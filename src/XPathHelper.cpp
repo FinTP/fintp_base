@@ -307,7 +307,7 @@ XALAN_CPP_NAMESPACE_QUALIFIER XalanNode* const XPathHelper::Evaluate( const stri
 		}
 
 		PrefixResolver* thePrefixResolver = NULL;
-		if ( defaultPrefix.length() > 0 )
+		if ( defaultPrefix.length() > 0 && ( xPath.find("x:") == 0 || xPath.find("/x:") != string::npos ) )
 		{
 			DEBUG_GLOBAL( "Using simple prefix resolver : Prefix [x], NamespaceURI [" << defaultPrefix << "], URI []" );
 			thePrefixResolver = new XalanSimplePrefixResolver( simplePRPrefix, simplePRNSUri, simplePRNSUri );

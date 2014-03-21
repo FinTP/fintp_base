@@ -76,14 +76,26 @@ void BatchMQStorage::enqueue( BatchResolution& resolution )
 	{
 	case BatchItem::BATCHITEM_BIN:
 	{
-		m_CrtHelper->putGroupMessage( item.getBinPayload(), item.getBatchId(), item.getSequence(), item.isLast() );
+		if ( m_ReplyOptions.empty() )
+			m_CrtHelper->putGroupMessage( item.getBinPayload(), item.getBatchId(), item.getSequence(), item.isLast() );
+		else
+		{
+			TransportReplyOptions replyOptions( m_ReplyOptions );
+			m_CrtHelper->putSAAmessage( replyOptions, m_ReplyQueue, item.getBinPayload(), item.getBatchId(), item.getSequence(), item.isLast() );
+		}
 		break;
 	}
 	case BatchItem::BATCHITEM_TXT:
 	{
 		const string& payload = item.getPayload();
 		ManagedBuffer buffer( ( unsigned char* )payload.c_str(), ManagedBuffer::Ref, payload.size() );
-		m_CrtHelper->putGroupMessage( &buffer, item.getBatchId(), item.getSequence(), item.isLast() );
+		if ( m_ReplyOptions.empty() )
+			m_CrtHelper->putGroupMessage( &buffer, item.getBatchId(), item.getSequence(), item.isLast() );
+		else
+		{
+			TransportReplyOptions replyOptions( m_ReplyOptions );
+			m_CrtHelper->putSAAmessage( replyOptions, m_ReplyQueue, &buffer, item.getBatchId(), item.getSequence(), item.isLast() ); 
+		}
 		break;
 	}
 	default:

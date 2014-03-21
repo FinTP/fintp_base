@@ -110,6 +110,8 @@
     <ClCompile Include="src\RoutingMessageEvaluator.cpp" />
     <ClCompile Include="src\SSL\HMAC.cpp" />
     <ClCompile Include="src\SSL\MD5.cpp" />
+    <ClCompile Include="src\Swift\SAAFilter.cpp" />
+    <ClCompile Include="src\Swift\SwiftFormatFilter.cpp" />
     <ClCompile Include="src\VersionInfo.cpp" />
     <ClCompile Include="src\XPathHelper.cpp" />
     <ClCompile Include="src\Template\TemplateParser.cpp" />
@@ -179,6 +181,8 @@
     <ClInclude Include="src\RoutingMessageEvaluator.h" />
     <ClInclude Include="src\SSL\HMAC.h" />
     <ClInclude Include="src\SSL\MD5.h" />
+    <ClInclude Include="src\Swift\SAAFilter.h" />
+    <ClInclude Include="src\Swift\SwiftFormatFilter.h" />
     <ClInclude Include="src\TimeUtil.h" />
     <ClInclude Include="src\XPathHelper.h" />
     <ClInclude Include="src\Template\TemplateParser.h" />

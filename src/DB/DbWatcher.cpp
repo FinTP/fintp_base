@@ -47,21 +47,21 @@
 using namespace FinTP;
 
 DbWatcher::DbWatcher( void ( *callback )( const NotificationObject* ), const bool fullObjectNotif ) : InstrumentedObject(), AbstractWatcher( callback ),
-m_WatchOptions( DbWatcher::ReturnDataSet ), m_FullObjectNotif( fullObjectNotif ), m_SelectSPName( "" ), m_DatabaseProvider( DatabaseProvider::None )
+m_WatchOptions( DbWatcher::ReturnDataSet ), m_FullObjectNotif( fullObjectNotif ), m_SelectSPName( "" ), m_DatabaseProvider( DatabaseProvider::None ), m_DatabaseToXmlTrimmOption( true )
 	
 {
 	INIT_COUNTER( INPUT_T_DEPTH );
 }
 
 DbWatcher::DbWatcher( NotificationPool* notificationPool, const bool fullObjectNotif ) : InstrumentedObject(), AbstractWatcher( notificationPool ), 
-	m_WatchOptions( DbWatcher::ReturnDataSet ), m_FullObjectNotif( fullObjectNotif ), m_SelectSPName( "" ), m_DatabaseProvider( DatabaseProvider::None )
+	m_WatchOptions( DbWatcher::ReturnDataSet ), m_FullObjectNotif( fullObjectNotif ), m_SelectSPName( "" ), m_DatabaseProvider( DatabaseProvider::None ), m_DatabaseToXmlTrimmOption( true )
 {
 	INIT_COUNTER( INPUT_T_DEPTH );
 }
 
 DbWatcher::DbWatcher( NotificationPool* notificationPool, const ConnectionString& connectionString, const bool fullObjectNotif ) : 
 	InstrumentedObject(), AbstractWatcher( notificationPool ), m_WatchOptions( DbWatcher::ReturnDataSet ), 
-	m_FullObjectNotif( fullObjectNotif ), m_SelectSPName( "" ), m_DatabaseProvider( DatabaseProvider::None )
+	m_FullObjectNotif( fullObjectNotif ), m_SelectSPName( "" ), m_DatabaseProvider( DatabaseProvider::None ), m_DatabaseToXmlTrimmOption( true )
 {
 	INIT_COUNTER( INPUT_T_DEPTH );
 	m_ConnectionString = connectionString;
@@ -312,7 +312,7 @@ void DbWatcher::internalScan()
 										}
 										else
 										{
-											doc = Database::ConvertToXML( myDS );
+											doc = Database::ConvertToXML( myDS, m_DatabaseToXmlTrimmOption );
 										}
 
 										if ( doc == NULL )

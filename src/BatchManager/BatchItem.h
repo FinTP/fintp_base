@@ -76,6 +76,9 @@ namespace FinTP
 					
 			void setLast( const bool flag = true ) { m_IsLast = flag; }
 			bool isLast() const { return m_IsLast; }
+
+			time_t getCreateDate() const { return m_CreateDate; }
+			void setCreateDate( const time_t createDate ) { m_CreateDate = createDate; }
 			
 			friend bool operator !=( const BatchItem& lparamBI, const BatchItem& rparamBI );
 			
@@ -96,6 +99,7 @@ namespace FinTP
 			// m_PayloadTupe = false - string, true - XML
 			BatchItem::BATCHITEM_TYPE m_PayloadType;
 			
+			time_t m_CreateDate;
 			int m_Sequence;
 			string m_BatchId;
 			string m_MessageId;

@@ -35,12 +35,13 @@ BatchItem::BatchItem( const int sequence, const string& batchId, const string& m
 	m_PayloadType( BATCHITEM_TXT ),	m_Sequence( sequence ), m_BatchId( batchId ), 
 	m_MessageId( messageId ), m_IsLast( isLastItem ), m_XmlOwner( false )
 {
+	time( &m_CreateDate );
 }
 
 BatchItem::BatchItem( const BatchItem& source ) : 
 	m_Eyecatcher( source.m_Eyecatcher ), m_Payload( "" ), m_XmlPayload( NULL ), m_BinPayload( NULL ), 
 	m_PayloadType( source.m_PayloadType ), m_Sequence( source.m_Sequence ), m_BatchId( source.m_BatchId ),
-	m_MessageId( source.m_MessageId ), m_IsLast( source.m_IsLast ), m_XmlOwner( false )	
+	m_MessageId( source.m_MessageId ), m_IsLast( source.m_IsLast ), m_XmlOwner( false ), m_CreateDate( source.m_CreateDate )
 {
 	switch( source.getPayloadType() )
 	{
@@ -75,6 +76,7 @@ BatchItem& BatchItem::operator=( const BatchItem& source )
 	m_MessageId = source.getMessageId();
 	m_IsLast = source.isLast();
 	m_XmlOwner = false;
+	m_CreateDate = source.getCreateDate();
 	
 	switch( source.getPayloadType() )
 	{

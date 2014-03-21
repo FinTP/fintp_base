@@ -97,6 +97,12 @@
     <Filter Include="Source Files\DB">
       <UniqueIdentifier>{86410aaa-d01f-43c7-8e6e-0b52e5c55154}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Swift">
+      <UniqueIdentifier>{4b35f8e3-0e52-4df9-97c7-17b5ebe8659a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Swift">
+      <UniqueIdentifier>{033a113a-03bf-468f-a7e2-8a8d6044e71c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AbstractWatcher.cpp">
@@ -278,6 +284,12 @@
     </ClCompile>
     <ClCompile Include="src\RoutingKeyword.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Swift\SAAFilter.cpp">
+      <Filter>Source Files\Swift</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Swift\SwiftFormatFilter.cpp">
+      <Filter>Source Files\Swift</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -469,6 +481,12 @@
     </ClInclude>
     <ClInclude Include="src\RoutingKeyword.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Swift\SAAFilter.h">
+      <Filter>Header Files\Swift</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Swift\SwiftFormatFilter.h">
+      <Filter>Header Files\Swift</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
