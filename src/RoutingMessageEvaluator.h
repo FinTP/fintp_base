@@ -284,15 +284,18 @@ class ExportedObject RoutingMessageEvaluator
 
 		void setNamespace( const string& namespaceValue ){ m_Namespace = namespaceValue; }
 
+		static string getOriginalRef( const string& reference, const string& batchId );
 		static string getBatchType( const string& batchId, const string& tableName = "BATCHJOBS", const string& sender = "" );
 
 	private:
 
+		static string (*m_GetOriginalRefFunction)( const string& reference, const string& batchId );
 		static string (*m_GetBatchTypeFunction)( const string& batchId, const string& tableName, const string& sender );
 		virtual string getMessageType() = 0;
 
 	public:
 
+		static void setGetOriginalRefFunction( string (*function)( const string& reference, const string& batchId ) );
 		static void setGetBatchTypeFunction( string (*function)(const string& batchId, const string& tableName, const string& sender) );
 
 		//Keyword operations

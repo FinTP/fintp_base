@@ -48,6 +48,7 @@ map<Plugin*, void*> RoutingMessageEvaluator::m_RegisteredPlugins;
 typedef map<Plugin*, void*>::const_iterator pluginIterator;
 #endif
 
+string (*RoutingMessageEvaluator::m_GetOriginalRefFunction)( const string& reference, const string& batchId ) = NULL;
 string (*RoutingMessageEvaluator::m_GetBatchTypeFunction)( const string& batchId, const string& tableName, const string& sender ) = NULL;
 
 RoutingKeywordCollection* RoutingMessageEvaluator::m_Keywords = NULL;
@@ -749,6 +750,13 @@ const vector<string> RoutingMessageEvaluator::getKeywordNames()
 	return result;
 }
 
+ void RoutingMessageEvaluator::setGetOriginalRefFunction( string (*function)( const string& reference, const string& batchId ) )
+ {
+	 if ( m_GetOriginalRefFunction != NULL )
+		 throw runtime_error( "GetOriginalRef function already set." );
+
+	m_GetOriginalRefFunction = function;
+ }
 
 void RoutingMessageEvaluator::setGetBatchTypeFunction( string (*function)(const string& batchId, const string& tableName, const string& sender) )
 {
@@ -756,6 +764,14 @@ void RoutingMessageEvaluator::setGetBatchTypeFunction( string (*function)(const 
 		throw runtime_error( "GetBatchType function already set." );
 
 	m_GetBatchTypeFunction = function;
+}
+
+string RoutingMessageEvaluator::getOriginalRef( const string& reference, const string& batchId )
+{
+	if ( m_GetOriginalRefFunction == NULL )
+		throw runtime_error( "GetOriginalRef function not set." );
+
+	return m_GetOriginalRefFunction( reference, batchId );
 }
 
 string RoutingMessageEvaluator::getBatchType( const string& batchId, const string& tableName, const string& sender )
