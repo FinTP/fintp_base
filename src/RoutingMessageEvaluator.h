@@ -40,7 +40,7 @@ using namespace std;
 #include "WSRM/SequenceResponse.h"
 
 #define FEEDBACK_PROVIDER_COUNT 8
-#define INTERNALXMLPAYLOAD_FIELDCOUNT 19
+#define INTERNALXMLPAYLOAD_FIELDCOUNT 20
 
 //TODO rework this dependency
 class RoutingMessage;
@@ -68,12 +68,12 @@ class InternalXmlPayload
 				IBANPL = 13,//CdtAccount
 				SENDERCORR = 14,//OrdBank
 				RECEIVERCORR = 15,//BenBank
-				//OBATCHID = 17,
+
 				//STATUS = 18,
 				ORGTXID = 16,//OrigRef
 				REASONCODE = 17,
 				ORGINSTRID = 18,
-				
+				OBATCHID = 19,
 			};
 
 	private :
@@ -173,7 +173,9 @@ class ExportedObject RoutingMessageEvaluator
 			GSRSXML,
 			ISOXML,
 			SAGSTS,
-			SEPASTS
+			SEPASTS,
+			EBASTS,
+			SWIFTSTS
 		};
 		
 		enum FeedbackProvider

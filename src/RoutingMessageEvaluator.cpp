@@ -125,18 +125,19 @@ const string RoutingMessageEvaluator::m_FeedbackIds[ FEEDBACK_PROVIDER_COUNT ] =
 		"Amount",//new
 		"ValueDate",
 		"RelRef",//RelatedReference
-		"DbtAccount"// ex IBAN",
+		"DbtAccount",// ex IBAN"
 		"SEQ",
 		"MAXSEQ",
 		"CdtAccount",// ex IBANPL",
 		"OrdBank",//ex SenderCorresp,
 		"BenBank",//"ReceiverCorresp",
-		//"OBatchId", //?
+
 		//"Status", //?
 		"OrigRef",//OriginalTransactionId, 056, 029
 		"RCode", // new ReasonCode
 		//"EndToEndId" nu mai e folosit
-		"OrigInstrID"// ex OriginalInstructedId
+		"OrigInstrID",// ex OriginalInstructedId
+		"OrigBatchID"
 	};
 
 //InternalXmlPayload implementation
@@ -260,10 +261,20 @@ RoutingMessageEvaluator* RoutingMessageEvaluator::getEvaluator( const XERCES_CPP
 
 bool RoutingMessageEvaluator::isIso( const string& msgNamespace )
 {
-	for ( pluginIterator it = m_RegisteredPlugins.begin(); it != m_RegisteredPlugins.end(); ++it )
-		if ( /*m_RegisteredPlugins[i]->isIso() &&*/ it->first->hasNamespace( msgNamespace ) )
-			return true;
-	return false;
+	return ( ( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:pacs.008.001.01" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:pacs.008.001.02" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:pacs.002.001.02" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:pacs.002.001.03" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:pacs.004.001.01" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:pacs.004.001.02" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:pacs.007.001.01" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:pacs.007.001.02" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:pacs.003.001.01" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:pacs.003.001.02" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:camt.029.001.03" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:camt.056.001.01" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:camt.007.002.03" ) ||
+		( msgNamespace == "urn:iso:std:iso:20022:tech:xsd:pain.001.001.03" ) );
 }
 
 bool RoutingMessageEvaluator::isBusinessFormat() const
