@@ -82,7 +82,7 @@
       <AdditionalDependencies>fintp_utils.lib;fintp_log.lib;fintp_transport.lib;fintp_udal.lib;pthreadVSE.lib;xerces-c_2.lib;Xalan-C_1.lib;Ws2_32.lib;libeay32.lib;ssleay32.lib;libcurl.lib;ZipArchive.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
-      <PreprocessorDefinitions>XALAN_1_9;DEBUG_ENABLED;RTTI;WIN32;_BASEDLL;USE_BOOST_REGEX;CRT_SECURE;CURL_STATICLIB;CURL_DISABLE_LDAP;ZIPARCHIVE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;XALAN_1_9;DEBUG_ENABLED;RTTI;WIN32;_BASEDLL;USE_BOOST_REGEX;CRT_SECURE;CURL_STATICLIB;CURL_DISABLE_LDAP;ZIPARCHIVE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
     </ClCompile>
   </ItemDefinitionGroup>
